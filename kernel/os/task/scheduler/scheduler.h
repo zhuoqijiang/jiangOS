@@ -22,3 +22,4 @@ void scheduler_delete_task(scheduler_t* sche, u32_t task_id);
 void kernel_add_task(task_t* task);
 void kernel_delete_task(u32_t pid);
 task_t* kernel_schedule();
+task_t* get_cur_task();

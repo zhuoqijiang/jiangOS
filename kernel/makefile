@@ -11,7 +11,7 @@ ASMFLAGS = -f elf -o
 CCFLAGS = -fno-stack-protector -m32 -c -o 
 
 OBJS = kernel.o start.o string.o io_asm.o io.o interrupt.o keyboard_asm.o scheduler.o task.o protect.o memory_cache_allocator.o memory_page_allocator.o \
-	new_scheduler.o o1_scheduler.o list.o queue.o paging.o disk.o file_sys.o file_op.o file_cache.o stdio.o
+	new_scheduler.o o1_scheduler.o list.o queue.o paging.o disk.o file_sys.o file_op.o file_cache.o stdio.o syscall.o syscall_asm.o
 KERNER = kernel 
 DEBUG_KERNEL = debug_kernel 
 
@@ -89,3 +89,9 @@ file_op.o: os/file/file_op.c
 
 stdio.o: base/stdio.c 
 	$(CC) $(CCFLAGS) $@ $<
+
+syscall.o: os/syscall/syscall.c 
+	$(CC) $(CCFLAGS) $@ $<
+
+syscall_asm.o: os/syscall/syscall.asm
+	$(ASM) $(ASMFLAGS) $@ $<

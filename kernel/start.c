@@ -14,6 +14,7 @@
 #include "os/file/file_cache.h"
 #include "os/file/file_op.h"
 #include "base/stdio.h"
+#include "os/syscall/syscall.h"
 extern memory_page_allocator_t kernel_page_allocator;
 extern memory_cache_allocator_t kernel_cache_allocator;
 extern scheduler_t* scheduler; 
@@ -26,13 +27,16 @@ void clean_screen()
 	}
 }
 
+int cnt = 0;
 void testA()
 {
-	//int fd = open("test", O_CTL);
-	flush_struct_cache();
+	int fd;
+	open(&fd, "test", O_CTL);
+	//printf("hello world");
 	while (1) {	
-		dis_str("A");
-		delay1s();
+		//delay1s();
+		cnt--;
+		printf("hello world");
 	}
 }
 Taskinfo taskinfoA;
@@ -40,8 +44,8 @@ Taskinfo taskinfoA;
 void testB()
 {
 	while (1) {
-		
-		dis_str("B");
+		printf("%d", cnt);
+		cnt++;
 		delay1s();
 	}
 }
@@ -75,6 +79,7 @@ void start()
 	o1_scheduler_init(scheduler); // init scheduler
 	open_paging_model();
 	init_fs();
+	init_file_struct_cache();
 	/*
 	char* page_test = memory_page_allocator_allocate(&kernel_page_allocator);
 	for (int i = 0; i < PAGE_SIZE; i++) {

@@ -40,11 +40,10 @@ void init_file_struct_cache()
 
 void flush_struct_cache()
 {
-	char* flush = memory_page_allocator_allocate(&kernel_page_allocator);
 	printf("\n%d\n",inode_cache.imap_page_num);
 	disk_write(inode_cache.imap_page_num, inode_cache.imap);
-	//disk_write(inode_cache.inode_page_num, inode_cache.inodes);
-	//disk_write(dir_entry_cache.page_num, dir_entry_cache.dir_entrys);
+	disk_write(inode_cache.inode_page_num, inode_cache.inodes);
+	disk_write(dir_entry_cache.page_num, dir_entry_cache.dir_entrys);
 }
 
 

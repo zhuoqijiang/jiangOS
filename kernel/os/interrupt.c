@@ -3,6 +3,7 @@
 #include "../base/const.h"
 #include "../base/io.h"
 #include "keyboard.h" 
+#include "syscall/syscall.h"
 u8_t idt_ptr[6];
 gate_t idt[IDT_SIZE];
 u16_t int_event_table = 0xffff;
@@ -59,7 +60,7 @@ void register_interrupt_event(const int ev, void* cb, u8_t desc_type, unsigned c
 	p_gate->attr = desc_type | (privilege << 5);
 	p_gate->offset_high = (base >> 16) & 0xffff;
 	
-	if (ev < 0x20) {
+	if (ev < 0x20 || ev == 0x50) {
 		return;
 	}
 	int_event_table = int_event_table & (~(1 << (ev - 0x20)));
@@ -68,8 +69,10 @@ void register_interrupt_event(const int ev, void* cb, u8_t desc_type, unsigned c
 void open_interrupt()
 {
 	init_idt();
-	register_interrupt_event(int_event_keyboard, keyboard_handle, 14, 0x4);
-	register_interrupt_event(0x20, clock_handle, 14, 0x4);
+	register_interrupt_event(INT_KEYBOARD_VECTOR, keyboard_handle, INT_GATE_TYPE_DESC, INT_USER_PRIVILEGE);
+	register_interrupt_event(INT_CLOCK_VECTOR, clock_handle, INT_GATE_TYPE_DESC, INT_USER_PRIVILEGE);
+	register_interrupt_event(INT_SYSCALL_VECTOR, sys_call, INT_GATE_TYPE_DESC, INT_USER_PRIVILEGE);
+	//very important, 0x6e, the six stand for user cpl  can use
 	//register_interrupt_event(int_event_at, keyboard_handle, 14, 0x4);
 	init_8259A();
 	//to_msti();

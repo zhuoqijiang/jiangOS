@@ -15,7 +15,7 @@ typedef struct {
 	bool is_used;
 }file_desc_t;
 
-int open(const char* pathname, int flags);
+int sys_open(int* fd,const char* pathname, int flags);
 int close(int fd);
 size_t wrtie(int fd, const void* buf, size_t count);
 size_t read(int fd, const void* buf, size_t count);
