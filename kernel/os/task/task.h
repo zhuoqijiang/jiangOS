@@ -2,7 +2,7 @@
 #include "../../base/type.h"
 #include "../../base/const.h"
 #include "../protect.h"
-
+#include "../file/file_op.h"
 
 typedef void (*taskinfo_f)();
 
@@ -52,6 +52,7 @@ typedef struct {
 	char name[16];
 	u32_t pid;
 	int o1_priority;
+	file_desc_t file_desc[MAX_FILE_DESC_SIZE];
 }task_t;
 
 
@@ -61,3 +62,5 @@ void init_taskinfo(Taskinfo* info, taskinfo_f f, u8_t* s, u32_t ss, char* name, 
 
 void task_run_prepare(task_t* task);
 void task_wait_prepare(task_t* task);
+
+int get_empty_file_desc(task_t* task);

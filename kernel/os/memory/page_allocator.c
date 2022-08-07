@@ -22,8 +22,12 @@ void memory_page_allocator_init(memory_page_allocator_t* alloc, void* start, int
 
 void* memory_page_allocator_allocate(memory_page_allocator_t* alloc) {
 	void* next_unuse_ptr = alloc->unuse_start->next;
-	void* page_ptr = alloc->unuse_start;
+	char* page_ptr = (char*)alloc->unuse_start;
 	alloc->unuse_start = next_unuse_ptr;
+	
+	for (int i = 0; i < PAGE_SIZE; i++) {
+		page_ptr[i] = 0;
+	}
 	return page_ptr;
 }
 

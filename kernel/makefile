@@ -11,7 +11,7 @@ ASMFLAGS = -f elf -o
 CCFLAGS = -fno-stack-protector -m32 -c -o 
 
 OBJS = kernel.o start.o string.o io_asm.o io.o interrupt.o keyboard_asm.o scheduler.o task.o protect.o memory_cache_allocator.o memory_page_allocator.o \
-	new_scheduler.o o1_scheduler.o list.o queue.o paging.o disk.o
+	new_scheduler.o o1_scheduler.o list.o queue.o paging.o disk.o file_sys.o file_op.o file_cache.o stdio.o
 KERNER = kernel 
 DEBUG_KERNEL = debug_kernel 
 
@@ -78,4 +78,14 @@ paging.o: os/paging.c
 disk.o: os/device/disk.c 
 	$(CC) $(CCFLAGS) $@ $<
 
+file_sys.o: os/file/file_sys.c  
+	$(CC) $(CCFLAGS) $@ $<
 
+file_cache.o: os/file/file_cache.c  
+	$(CC) $(CCFLAGS) $@ $<
+
+file_op.o: os/file/file_op.c  
+	$(CC) $(CCFLAGS) $@ $<
+
+stdio.o: base/stdio.c 
+	$(CC) $(CCFLAGS) $@ $<

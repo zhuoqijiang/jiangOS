@@ -32,7 +32,7 @@ max_cylind equ 79
 max_header equ 1
 max_sector equ 18
 
-kernel_sector equ 35
+kernel_sector equ 128
 
 now_load_kernel_sector db 255 ;count't dw
 start: 

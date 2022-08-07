@@ -10,6 +10,10 @@
 #include "os/task/scheduler/o1_scheduler.h"
 #include "os/paging.h"
 #include "os/device/disk.h"
+#include "os/file/file_sys.h"
+#include "os/file/file_cache.h"
+#include "os/file/file_op.h"
+#include "base/stdio.h"
 extern memory_page_allocator_t kernel_page_allocator;
 extern memory_cache_allocator_t kernel_cache_allocator;
 extern scheduler_t* scheduler; 
@@ -24,12 +28,13 @@ void clean_screen()
 
 void testA()
 {
+	//int fd = open("test", O_CTL);
+	flush_struct_cache();
 	while (1) {	
 		dis_str("A");
 		delay1s();
 	}
 }
-u8_t stack_testA[1024];
 Taskinfo taskinfoA;
 
 void testB()
@@ -40,7 +45,6 @@ void testB()
 		delay1s();
 	}
 }
-u8_t stack_testB[1024];
 Taskinfo taskinfoB;
 
 void testC()
@@ -51,14 +55,14 @@ void testC()
 		delay1s();
 	}
 }
-u8_t stack_testC[1024];
 Taskinfo taskinfoC;
 
 void start()
 {
 	clean_screen();
-	reload_gdt();	
-	dis_str("gdt init successful\n");
+	reload_gdt();
+	printf("gdt init successful-%s\n", "yes");
+	//while(1);
 	open_interrupt();
 	dis_str("start int service successful\n");
 	//init_task_table();
@@ -70,16 +74,16 @@ void start()
 	scheduler = memory_cache_allocator_allocate(&kernel_cache_allocator, sizeof(o1_scheduler_t));
 	o1_scheduler_init(scheduler); // init scheduler
 	open_paging_model();
-	
+	init_fs();
+	/*
 	char* page_test = memory_page_allocator_allocate(&kernel_page_allocator);
 	for (int i = 0; i < PAGE_SIZE; i++) {
 		page_test[i] = i % 256; 
 	}
 	char* page_test1 = memory_page_allocator_allocate(&kernel_page_allocator);
-	disk_write(0, &page_test[0]);
+	disk_write(1, &page_test[0]);
 	disk_read(0, &page_test1[0]);
-	page_test1[0] = 1;
-	dis_str(page_test1);
+	*/
 	
 	init_taskinfo(&taskinfoA, testA, memory_page_allocator_allocate(&kernel_page_allocator), PAGE_SIZE, "A", 0);
 	task_t* taskA = memory_cache_allocator_allocate(&kernel_cache_allocator, sizeof(task_t));

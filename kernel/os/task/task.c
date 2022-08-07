@@ -60,6 +60,9 @@ void task_init_by_info(task_t* task, Taskinfo* taskinfo)
 	memcpy(&task->name, &taskinfo->name, 16);
 	task->taskstatus = TASK_WAIT;
 	task->o1_priority = taskinfo->priority;
+	for (int i = 0; i < MAX_FILE_DESC_SIZE; i++) {
+		task->file_desc[i].is_used = 0;	
+	}
 }
 
 void task_run_prepare(task_t* task) 
@@ -82,3 +85,14 @@ void init_taskinfo(Taskinfo* info, taskinfo_f f, u8_t* s, u32_t ss, char* name, 
 	memcpy(&info->name, name, 16);
 }
 
+
+int get_empty_file_desc(task_t* task)
+{
+	for (int i = 0; i < MAX_FILE_DESC_SIZE; i++) {
+		if (task->file_desc[i].is_used == 0) {
+			task->file_desc[i].is_used = 1;
+			return i;
+		}
+	}
+	return -1;
+}

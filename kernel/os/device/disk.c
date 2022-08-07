@@ -31,10 +31,10 @@ static void disk_cmd_write_init(disk_cmd_t* cmd, u32_t sector_num)
 }
 
 
-void disk_read(u32_t sector_num, void* dst)
+void disk_read(u32_t page_num, void* dst)
 {
 	disk_cmd_t cmd;
-	disk_cmd_read_init(&cmd, sector_num);
+	disk_cmd_read_init(&cmd, page_num * (PAGE_SIZE / SECTOR_SIZE));
 	
 	#ifndef DEBUG
 	//out_byte(DISK_REG_FEATURES, cmd.feature);
@@ -59,10 +59,10 @@ void disk_read(u32_t sector_num, void* dst)
 	#endif
 }
 
-void disk_write(u32_t sector_num, void* src)
+void disk_write(u32_t page_num, void* src)
 {
 	disk_cmd_t cmd;
-	disk_cmd_write_init(&cmd, sector_num);
+	disk_cmd_write_init(&cmd, page_num * (PAGE_SIZE / SECTOR_SIZE));
 	
 	#ifndef DEBUG
 	//out_byte(DISK_REG_FEATURES, cmd.feature);

@@ -14,6 +14,6 @@ typedef struct {
 }disk_cmd_t;
 
 
-void disk_read(u32_t sector_num, void* dst);
+void disk_read(u32_t page_num, void* dst);
 
-void disk_write(u32_t sector_num, void* scr);
+void disk_write(u32_t page_num, void* scr);
