@@ -43,7 +43,7 @@ out_byte:
 	push ebp 
 	mov ebp, esp
 	mov edx, [ebp + 8]
-	mov al, [esp + 12]
+	mov al, [ebp + 12]
 	out dx, al
 	nop ;delay
 	nop ;delay

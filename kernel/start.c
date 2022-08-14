@@ -28,15 +28,18 @@ void clean_screen()
 }
 
 int cnt = 0;
+char write_test[PAGE_SIZE];
 void testA()
 {
 	int fd;
-	open(&fd, "test", O_CTL);
-	//printf("hello world");
+	fd = open("test", O_CTL);
+	char *test = "testing";
+	size_t size = write(fd, test, strlen(test));
+	size = read(fd, write_test, 17);
+	write_test[17] = 0;
+	printf("%s\n", write_test);
 	while (1) {	
-		//delay1s();
-		cnt--;
-		printf("hello world");
+		delay1s();
 	}
 }
 Taskinfo taskinfoA;

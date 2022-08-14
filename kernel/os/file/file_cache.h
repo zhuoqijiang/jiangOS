@@ -36,5 +36,5 @@ typedef struct {
 
 void init_file_struct_cache();
 void flush_struct_cache();
-void flush_data_cache(int page_num);
-void read_data_to_flush(int page_num);
+void write_data_to_disk(int page_num);
+void read_data_from_disk(int page_num);

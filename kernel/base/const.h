@@ -77,7 +77,7 @@
 #define TASK_STACK_SIZE 4096
 
 #define LDT_SEGMENT 18 * 4 
-
+#define EAX_REG_OFFSET 11 * 4
 
 
 

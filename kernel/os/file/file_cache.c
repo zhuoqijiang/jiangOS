@@ -40,14 +40,13 @@ void init_file_struct_cache()
 
 void flush_struct_cache()
 {
-	printf("\n%d\n",inode_cache.imap_page_num);
 	disk_write(inode_cache.imap_page_num, inode_cache.imap);
 	disk_write(inode_cache.inode_page_num, inode_cache.inodes);
 	disk_write(dir_entry_cache.page_num, dir_entry_cache.dir_entrys);
 }
 
 
-void flush_data_cache(int page_num)
+void write_data_to_disk(int page_num)
 {
 	for (int i = 0; i < MAX_PAGE_QUANTITY; i++) {
 		disk_write(page_num + i, data_cache_pages[i]);
@@ -55,7 +54,7 @@ void flush_data_cache(int page_num)
 }
 
 
-void read_data_to_flush(int page_num)
+void read_data_from_disk(int page_num)
 {
 	for (int i = 0; i < MAX_PAGE_QUANTITY; i++) {
 		disk_read(page_num + i, data_cache_pages[i]);
