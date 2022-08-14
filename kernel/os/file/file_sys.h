@@ -44,3 +44,6 @@ typedef struct {
 }dir_entry_t;
 
 void init_fs();
+
+void dir_entry_clear(dir_entry_t*);
+void inode_clear(inode_t*);

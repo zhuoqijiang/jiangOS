@@ -8,6 +8,8 @@ global open
 global write
 global read 
 global close 
+global delete_file
+global file_list
 ;extern to_eoi
 
 sys_call:
@@ -90,6 +92,24 @@ close:
 	mov ebp, esp 
 	mov esi, [ebp + 8]
 	mov eax, 3
+	int 0x50
+	pop ebp 
+	ret
+
+delete_file:
+	push ebp 
+	mov ebp, esp 
+	mov esi, [ebp + 8]
+	mov eax, 4
+	int 0x50
+	pop ebp 
+	ret
+
+file_list:
+	push ebp 
+	mov ebp, esp 
+	mov esi, [ebp + 8]
+	mov eax, 5
 	int 0x50
 	pop ebp 
 	ret

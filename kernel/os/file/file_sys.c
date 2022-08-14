@@ -42,3 +42,12 @@ void init_fs()
 	memory_page_allocator_deallocate(&kernel_page_allocator, flush);
 
 }
+
+void dir_entry_clear(dir_entry_t * entry)
+{
+	memset(entry, 0, sizeof(dir_entry_t));
+}
+void inode_clear(inode_t* inode)
+{
+	memset(inode, 0, sizeof(inode_t));
+}

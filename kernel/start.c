@@ -32,12 +32,17 @@ char write_test[PAGE_SIZE];
 void testA()
 {
 	int fd;
-	fd = open("test", O_CTL);
-	char *test = "testing";
-	size_t size = write(fd, test, strlen(test));
-	size = read(fd, write_test, 17);
-	write_test[17] = 0;
-	printf("%s\n", write_test);
+	fd = open("test", O_CTL|O_RW);
+	fd = open("testA", O_CTL|O_RW);
+	//char *test = "testing";
+	//size_t size = write(fd, test, strlen(test));
+	dir_entry_t* file_dir[MAX_INODE_QUANTITY];
+	int len = file_list(&file_dir);
+	for (int i = 0; i < len; i++) {
+		printf("%s\n", file_dir[i]->name);
+	}
+	
+	//printf("%d\n", len);
 	while (1) {	
 		delay1s();
 	}
