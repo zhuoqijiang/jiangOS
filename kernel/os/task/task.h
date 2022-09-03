@@ -3,7 +3,7 @@
 #include "../../base/const.h"
 #include "../protect.h"
 #include "../file/file_op.h"
-
+#include "../../tools/container/queue.h"
 typedef void (*taskinfo_f)();
 
 
@@ -53,6 +53,7 @@ typedef struct {
 	u32_t pid;
 	int o1_priority;
 	file_desc_t file_desc[MAX_FILE_DESC_SIZE];
+	queue_t signals;
 }task_t;
 
 

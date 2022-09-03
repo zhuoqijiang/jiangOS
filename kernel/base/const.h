@@ -78,7 +78,7 @@
 
 #define LDT_SEGMENT 18 * 4 
 #define EAX_REG_OFFSET 11 * 4
-
+#define MAX_SIGNAL_SIZE 8
 
 
 

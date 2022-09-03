@@ -65,6 +65,8 @@ int sys_open(const char* pathname, int flags)
 			return -1;
 		}
 	}
+
+	inode_cache.inodes[i].cnt++;
 	//task_t** cur_task = &scheduler->cur_tack;
 	task_t* cur_task = get_cur_task(&scheduler);
 	int file_desc_index = get_empty_file_desc(cur_task);
@@ -74,6 +76,7 @@ int sys_open(const char* pathname, int flags)
 	cur_task->file_desc[file_desc_index].read = sys_read;
 	cur_task->file_desc[file_desc_index].write = sys_write;
 	cur_task->file_desc[file_desc_index].mode = flags;
+	
 	return file_desc_index;
 }
 size_t sys_write(int fd, const void* buf, size_t count)
@@ -122,7 +125,13 @@ size_t sys_read(int fd, void* buf, size_t count)
 int sys_close(int fd)
 {
 	task_t* cur_task = get_cur_task(&scheduler);
+	file_desc_t* file_desc = &cur_task->file_desc[fd];
+	int inode_num = file_desc->entry->inode_num;
+	if(!(--inode_cache.inodes[inode_num].cnt)) {
+		sys_delete_file(fd);
+	};
 	cur_task->file_desc[fd].is_used = false;
+	
 	return 0;
 }
 

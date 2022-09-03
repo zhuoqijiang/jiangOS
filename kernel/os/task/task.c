@@ -2,6 +2,7 @@
 #include "task.h"
 #include "../../base/string.h"
 #include "../../base/io.h"
+#include "../memory/cache_allocator.h"
 extern descriptor_t gdt[GDT_SIZE];
 extern tss_t tss;
 
@@ -51,6 +52,17 @@ static int task_get_pid()
 	return -1;
 }
 
+extern memory_cache_allocator_t kernel_cache_allocator;
+
+static void* task_allocate(size_t size)
+{
+    return memory_cache_allocator_allocate(&kernel_cache_allocator, size);
+}
+static void task_deallocate(void* p)
+{
+    memory_cache_allocator_deallocate(&kernel_cache_allocator, p);
+}
+
 void task_init_by_info(task_t* task, Taskinfo* taskinfo) 
 {
 	int pid = task_get_pid();
@@ -63,6 +75,8 @@ void task_init_by_info(task_t* task, Taskinfo* taskinfo)
 	for (int i = 0; i < MAX_FILE_DESC_SIZE; i++) {
 		task->file_desc[i].is_used = 0;	
 	}
+	queue_init_alloc_dealloc(&task->signals, task_allocate, task_deallocate);
+	queue_construct(&task->signals, sizeof(void*));
 }
 
 void task_run_prepare(task_t* task) 

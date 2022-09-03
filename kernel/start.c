@@ -31,18 +31,15 @@ int cnt = 0;
 char write_test[PAGE_SIZE];
 void testA()
 {
-	int fd;
+	
+	int fd,fdA;
 	fd = open("test", O_CTL|O_RW);
-	fd = open("testA", O_CTL|O_RW);
-	//char *test = "testing";
-	//size_t size = write(fd, test, strlen(test));
-	dir_entry_t* file_dir[MAX_INODE_QUANTITY];
-	int len = file_list(&file_dir);
-	for (int i = 0; i < len; i++) {
-		printf("%s\n", file_dir[i]->name);
-	}
+	fdA = open("testA", O_CTL|O_RW);
+	char *test = "testing";
+	size_t size = write(fd, test, strlen(test));
 	
 	//printf("%d\n", len);
+	close(fd);
 	while (1) {	
 		delay1s();
 	}
