@@ -10,6 +10,8 @@ global read
 global close 
 global delete_file
 global file_list
+global kill
+global get_task_id
 ;extern to_eoi
 
 sys_call:
@@ -110,6 +112,23 @@ file_list:
 	mov ebp, esp 
 	mov esi, [ebp + 8]
 	mov eax, 5
+	int 0x50
+	pop ebp 
+	ret
+
+kill:
+	push ebp 
+	mov ebp, esp 
+	mov esi, [ebp + 8]
+	mov eax, 6
+	int 0x50
+	pop ebp 
+	ret
+
+get_task_id:
+	push ebp 
+	mov ebp, esp 
+	mov eax, 7
 	int 0x50
 	pop ebp 
 	ret

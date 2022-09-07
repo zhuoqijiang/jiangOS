@@ -4,6 +4,7 @@
 #include "../../base/type.h"
 #include "../../base/const.h"
 #include "../file/file_cache.h"
+#include "../task/signal/signal.h"
 void sys_call();
 
 
@@ -15,3 +16,7 @@ int close(int fd);
 
 void delete_file(int fd);
 int file_list(dir_entry_t* (*entrys)[MAX_INODE_QUANTITY]);
+
+void kill(signal_t* signal);
+
+int get_task_id();

@@ -3,6 +3,7 @@
 #include "../../base/string.h"
 #include "../../base/io.h"
 #include "../memory/cache_allocator.h"
+#include "../task/signal/signal.h" 
 extern descriptor_t gdt[GDT_SIZE];
 extern tss_t tss;
 
@@ -63,6 +64,13 @@ static void task_deallocate(void* p)
     memory_cache_allocator_deallocate(&kernel_cache_allocator, p);
 }
 
+task_t* get_task_by_info(Taskinfo* taskinfo)
+{
+	task_t* task = memory_cache_allocator_allocate(&kernel_cache_allocator, sizeof(task_t));
+	task_init_by_info(task, taskinfo);
+	return task;
+}
+
 void task_init_by_info(task_t* task, Taskinfo* taskinfo) 
 {
 	int pid = task_get_pid();
@@ -76,7 +84,9 @@ void task_init_by_info(task_t* task, Taskinfo* taskinfo)
 		task->file_desc[i].is_used = 0;	
 	}
 	queue_init_alloc_dealloc(&task->signals, task_allocate, task_deallocate);
-	queue_construct(&task->signals, sizeof(void*));
+	queue_construct(&task->signals, sizeof(signal_t));
+	//signal_t signal;
+	//queue_push(&task->signals, &signal); 
 }
 
 void task_run_prepare(task_t* task) 
@@ -109,4 +119,11 @@ int get_empty_file_desc(task_t* task)
 		}
 	}
 	return -1;
+}
+
+void release_task(task_t* task)
+{
+	pid_upon[task->pid] = 0;
+	queue_destory(&task->signals);
+	memory_cache_allocator_deallocate(&kernel_cache_allocator, task);
 }

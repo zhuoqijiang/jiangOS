@@ -31,16 +31,24 @@ int cnt = 0;
 char write_test[PAGE_SIZE];
 void testA()
 {
-	
+	/*
 	int fd,fdA;
 	fd = open("test", O_CTL|O_RW);
 	fdA = open("testA", O_CTL|O_RW);
 	char *test = "testing";
 	size_t size = write(fd, test, strlen(test));
-	
-	//printf("%d\n", len);
 	close(fd);
-	while (1) {	
+	*/
+	//printf("%d\n", len);
+	/*
+	signal_t signal;
+	int dst_task_id = 1;
+	signal.type = SIGNAL_KILL;
+	signal.arg = &dst_task_id;
+	kill(&signal);
+	*/
+	while (1) {
+		printf("%d",get_task_id());
 		delay1s();
 	}
 }
@@ -48,9 +56,14 @@ Taskinfo taskinfoA;
 
 void testB()
 {
+	signal_t signal;
+	int dst_task_id = 0;
+	signal.type = SIGNAL_KILL;
+	signal.arg = &dst_task_id;
+	kill(&signal);
 	while (1) {
-		printf("%d", cnt);
-		cnt++;
+		//printf("B");
+		printf("%d",get_task_id());
 		delay1s();
 	}
 }

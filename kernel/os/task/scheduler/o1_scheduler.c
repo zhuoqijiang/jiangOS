@@ -1,6 +1,6 @@
 #include "o1_scheduler.h"
 #include "../../memory/cache_allocator.h"
-
+#include "../signal/signal.h" 
  
 extern memory_cache_allocator_t kernel_cache_allocator;
 
@@ -42,6 +42,9 @@ task_t* o1_scheduler_schedule(scheduler_t* scheduler)
 	o1_scheduler_t* sche = scheduler;
 	if (sche->scheduler.cur_tack != NULL) {
 		task_wait_prepare(sche->scheduler.cur_tack);
+		if (sche->level == PRIORITY_MAX_LEVEL) {
+			handle_signals(sche->scheduler.cur_tack);
+		}
 	}
 	while (true) {
 		if (sche->level > PRIORITY_MAX_LEVEL) {

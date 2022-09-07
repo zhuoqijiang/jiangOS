@@ -58,6 +58,7 @@ typedef struct {
 
 
 void task_init(task_t* task, u32_t offset);
+task_t* get_task_by_info(Taskinfo* taskinfo);
 void task_init_by_info(task_t* task, Taskinfo* taskinfo);
 void init_taskinfo(Taskinfo* info, taskinfo_f f, u8_t* s, u32_t ss, char* name, int priority);
 
@@ -65,3 +66,4 @@ void task_run_prepare(task_t* task);
 void task_wait_prepare(task_t* task);
 
 int get_empty_file_desc(task_t* task);
+void release_task(task_t* task);

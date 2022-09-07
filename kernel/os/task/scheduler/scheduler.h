@@ -15,11 +15,13 @@ typedef struct scheduler_t{
 
 
 void scheduler_add_task(scheduler_t* sche, task_t* task);
-void scheduler_delete_task(scheduler_t* sche, u32_t task_id);
+void scheduler_delete_task(scheduler_t* sche, int task_id);
 
 
 
 void kernel_add_task(task_t* task);
-void kernel_delete_task(u32_t pid);
+void kernel_delete_task(int task_id);
 task_t* kernel_schedule();
 task_t* get_cur_task();
+task_t* get_task_by_id(int task_id);
+int get_cur_task_id();
