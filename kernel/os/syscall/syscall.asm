@@ -12,6 +12,7 @@ global delete_file
 global file_list
 global kill
 global get_task_id
+global get_task_arg
 ;extern to_eoi
 
 sys_call:
@@ -131,4 +132,12 @@ get_task_id:
 	mov eax, 7
 	int 0x50
 	pop ebp 
+	ret
+
+get_task_arg:
+	push ebp 
+	mov ebp, esp
+	mov eax, 8
+	int 0x50
+	pop ebp
 	ret

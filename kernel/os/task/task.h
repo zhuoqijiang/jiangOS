@@ -4,7 +4,7 @@
 #include "../protect.h"
 #include "../file/file_op.h"
 #include "../../tools/container/queue.h"
-typedef void (*taskinfo_f)();
+typedef void* taskinfo_f;
 
 
 typedef struct {
@@ -34,6 +34,7 @@ typedef struct {
 	u32_t stack_size;
 	char name[16];
 	int priority;
+	char arg[64];
 }Taskinfo;
 
 typedef enum {
@@ -54,13 +55,14 @@ typedef struct {
 	int o1_priority;
 	file_desc_t file_desc[MAX_FILE_DESC_SIZE];
 	queue_t signals;
+	char arg[64];
 }task_t;
 
 
 void task_init(task_t* task, u32_t offset);
 task_t* get_task_by_info(Taskinfo* taskinfo);
 void task_init_by_info(task_t* task, Taskinfo* taskinfo);
-void init_taskinfo(Taskinfo* info, taskinfo_f f, u8_t* s, u32_t ss, char* name, int priority);
+void init_taskinfo(Taskinfo* info, taskinfo_f f, u8_t* s, u32_t ss, char* name, int priority, void* arg);
 
 void task_run_prepare(task_t* task);
 void task_wait_prepare(task_t* task);

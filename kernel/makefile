@@ -10,8 +10,9 @@ DEBUG_LDFLAGS = -m elf_i386 -Ttext=$(ENTRYPOINT) -o
 ASMFLAGS = -f elf -o
 CCFLAGS = -fno-stack-protector -m32 -c -o 
 
-OBJS = kernel.o start.o string.o io_asm.o io.o interrupt.o keyboard_asm.o scheduler.o task.o protect.o memory_cache_allocator.o memory_page_allocator.o \
-	new_scheduler.o o1_scheduler.o list.o queue.o paging.o disk.o file_sys.o file_op.o file_cache.o stdio.o syscall.o syscall_asm.o signal.o
+OBJS = kernel.o start.o string.o io_asm.o io.o interrupt.o event_asm.o scheduler.o task.o protect.o memory_cache_allocator.o memory_page_allocator.o \
+	new_scheduler.o o1_scheduler.o list.o queue.o paging.o disk.o file_sys.o file_op.o file_cache.o stdio.o syscall.o syscall_asm.o signal.o kkeyboard.o \
+	app_file.o
 KERNER = kernel 
 DEBUG_KERNEL = debug_kernel 
 
@@ -51,7 +52,7 @@ scheduler.o: os/task/scheduler.c
 kernel.o: kernel.asm
 	$(ASM) $(ASMFLAGS) $@ $<
 
-keyboard_asm.o: os/keyboard.asm
+event_asm.o: os/event.asm
 	$(ASM) $(ASMFLAGS) $@ $<
 
 list.o: tools/container/list.c 
@@ -97,4 +98,10 @@ syscall_asm.o: os/syscall/syscall.asm
 	$(ASM) $(ASMFLAGS) $@ $<
 
 signal.o: os/task/signal/signal.c 
+	$(CC) $(CCFLAGS) $@ $<
+
+kkeyboard.o: os/device/driver/keyboard.c 
+	$(CC) $(CCFLAGS) $@ $<
+
+app_file.o: apps/file.c
 	$(CC) $(CCFLAGS) $@ $<

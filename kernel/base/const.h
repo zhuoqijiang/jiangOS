@@ -114,3 +114,8 @@
 #define MAX_PAGE_QUANTITY 3
 #define INODE_SIZE 64
 #define MAX_FILE_DESC_SIZE 32
+
+
+
+#define MAX_ARG_SIZE 64
+#define MAX_ARGS 3

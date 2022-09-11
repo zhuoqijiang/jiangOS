@@ -97,3 +97,15 @@ void itoas(int num,char* str,int radix)
         str[i - 1 + k - j] = temp;
     }
 }
+
+int strfind(char* str, char c, size_t cnt)
+{
+	for (int i = 0; i < strlen(str); i++) {
+		if (str[i] == c) {
+			if (--cnt == 0) {
+				return i;
+			}
+		}
+	}
+	return -1;
+}

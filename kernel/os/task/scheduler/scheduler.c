@@ -80,3 +80,8 @@ int get_cur_task_id()
 {
 	return get_cur_task()->pid;
 }
+
+char* get_cur_task_arg()
+{
+	return get_cur_task()->arg;
+}

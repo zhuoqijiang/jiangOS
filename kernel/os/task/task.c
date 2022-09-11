@@ -84,7 +84,8 @@ void task_init_by_info(task_t* task, Taskinfo* taskinfo)
 		task->file_desc[i].is_used = 0;	
 	}
 	queue_init_alloc_dealloc(&task->signals, task_allocate, task_deallocate);
-	queue_construct(&task->signals, sizeof(signal_t));
+	queue_construct(&task->signals, sizeof(signal_t));\
+	memcpy(task->arg, taskinfo->arg, strlen(taskinfo->arg));
 	//signal_t signal;
 	//queue_push(&task->signals, &signal); 
 }
@@ -100,13 +101,14 @@ void task_wait_prepare(task_t* task)
 {
 	task->taskstatus = TASK_WAIT;
 }
-void init_taskinfo(Taskinfo* info, taskinfo_f f, u8_t* s, u32_t ss, char* name, int priority)
+void init_taskinfo(Taskinfo* info, taskinfo_f f, u8_t* s, u32_t ss, char* name, int priority, void* arg)
 {
 	info->f = f;
 	info->stack = s;
 	info->stack_size = ss;
 	info->priority = priority;
 	memcpy(&info->name, name, 16);
+	memcpy(&info->arg, arg, strlen(arg));
 }
 
 
@@ -127,3 +129,4 @@ void release_task(task_t* task)
 	queue_destory(&task->signals);
 	memory_cache_allocator_deallocate(&kernel_cache_allocator, task);
 }
+

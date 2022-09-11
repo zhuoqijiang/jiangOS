@@ -15,6 +15,7 @@ void* sys_call_table[MAX_SYSCALL_QUANTITY] = {
 	sys_file_list,
 	send_signal,
 	get_cur_task_id,
+	get_cur_task_arg
 };
 
 

@@ -2,7 +2,7 @@
 #include "interrupt.h"
 #include "../base/const.h"
 #include "../base/io.h"
-#include "keyboard.h" 
+#include "event.h" 
 #include "syscall/syscall.h"
 u8_t idt_ptr[6];
 gate_t idt[IDT_SIZE];

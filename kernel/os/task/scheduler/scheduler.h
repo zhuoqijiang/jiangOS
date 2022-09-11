@@ -25,3 +25,4 @@ task_t* kernel_schedule();
 task_t* get_cur_task();
 task_t* get_task_by_id(int task_id);
 int get_cur_task_id();
+char* get_cur_task_arg();

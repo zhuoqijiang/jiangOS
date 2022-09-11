@@ -15,6 +15,9 @@
 #include "os/file/file_op.h"
 #include "base/stdio.h"
 #include "os/syscall/syscall.h"
+#include "os/device/driver/keyboard.h"
+
+
 extern memory_page_allocator_t kernel_page_allocator;
 extern memory_cache_allocator_t kernel_cache_allocator;
 extern scheduler_t* scheduler; 
@@ -31,14 +34,14 @@ int cnt = 0;
 char write_test[PAGE_SIZE];
 void testA()
 {
-	/*
+	
 	int fd,fdA;
 	fd = open("test", O_CTL|O_RW);
 	fdA = open("testA", O_CTL|O_RW);
 	char *test = "testing";
 	size_t size = write(fd, test, strlen(test));
-	close(fd);
-	*/
+	//close(fd);
+	
 	//printf("%d\n", len);
 	/*
 	signal_t signal;
@@ -47,38 +50,136 @@ void testA()
 	signal.arg = &dst_task_id;
 	kill(&signal);
 	*/
+
+	char str[200];
+	int index = 0;
+	memset(str, 0, 200);
 	while (1) {
-		printf("%d",get_task_id());
-		delay1s();
+	//	printf("%d",get_task_id());
+		char c = read_key();
+		if (c) {
+			str[index++] = c;
+			if (c == '\n') {
+				printf("%s", str);
+				memset(str, 0, 200);
+				index = 0;
+			}
+		}
+		//delay1s();
 	}
 }
 Taskinfo taskinfoA;
 
 void testB()
 {
+	/*
 	signal_t signal;
 	int dst_task_id = 0;
 	signal.type = SIGNAL_KILL;
 	signal.arg = &dst_task_id;
 	kill(&signal);
+	*/
 	while (1) {
 		//printf("B");
-		printf("%d",get_task_id());
+		printf("B");
+		//printf("%d",get_task_id());
 		delay1s();
 	}
 }
 Taskinfo taskinfoB;
 
-void testC()
+char arg[MAX_ARG_SIZE];
+extern void ls();
+extern void touch(const char* name);
+extern void rm(const char* name);
+extern void cat(const char* name);
+extern void edit(const char* name);
+
+void exec()
 {
+	char* arg = get_task_arg();
+	
+	int cnt = 1;
+	char cmd[MAX_ARG_SIZE];
+	memset(cmd, 0 ,MAX_ARG_SIZE);
+	char args[MAX_ARGS][MAX_ARG_SIZE];
+	int cmd_end = strfind(arg, ' ', cnt);
+	int arg_length = strlen(arg);
+	memcpy(cmd, arg, cmd_end);
+	
+	//printf("%s\n", cmd);
+	for (int i = 0; i < MAX_ARGS; i++) {
+		cnt++;
+		int argx_end = strfind(arg, ' ', cnt - 1);
+		int argz_end = strfind(arg, ' ', cnt);
+		if (argz_end == -1 || argx_end + 1 >= arg_length) {
+			break;
+		}
+		memcpy(&args[i][0], &arg[argx_end + 1], argz_end - argx_end);
+	}
+	keyboard_event_set_task(get_task_id());
+
+	
+	if (!strcmp(cmd, "ls")) {
+		ls();
+	}
+	else if (!strcmp(cmd, "touch")) {
+		touch(args[0]);
+	}
+	else if (!strcmp(cmd, "rm")) {
+		rm(args[0]);
+	}
+	else if (!strcmp(cmd, "cat")) {
+		cat(args[0]);
+	}
+	else if (!strcmp(cmd, "edit")) {
+		edit(args[0]);
+	}
+	else {
+		printf("cmd no found\n");
+	}
+	
+	printf(">>");
+	keyboard_event_set_task(0);
+	signal_t signal;
+	int dst_task_id = get_task_id();
+	signal.type = SIGNAL_KILL;
+	signal.arg = &dst_task_id;
+	kill(&signal);
+	while(1){}
+}
+
+void start_task()
+{
+	Taskinfo taskinfo;
+	init_taskinfo(&taskinfo, exec, memory_page_allocator_allocate(&kernel_page_allocator), PAGE_SIZE, "ls", 0, arg);
+	task_t* task = get_task_by_info(&taskinfo);
+	scheduler_add_task(scheduler, task);
+}
+void super() {
+	printf(">>");
+	keyboard_event_set_task(get_task_id());
+	int index = 0;
+	memset(arg, 0, MAX_ARG_SIZE);
 	while (1) {
-		
-		dis_str("C");
-		delay1s();
+		char c = read_key();
+		if (c) {
+			
+			printf("%c", c);
+			if (c == '\n') {
+				arg[index] = ' ';
+				start_task();
+				memset(arg, 0, MAX_ARG_SIZE);
+				index = 0;
+			}
+			else {
+				arg[index++] = c;
+			}
+		}
 	}
 }
-Taskinfo taskinfoC;
 
+Taskinfo superinfo;
 void start()
 {
 	clean_screen();
@@ -98,23 +199,9 @@ void start()
 	open_paging_model();
 	init_fs();
 	init_file_struct_cache();
-	/*
-	char* page_test = memory_page_allocator_allocate(&kernel_page_allocator);
-	for (int i = 0; i < PAGE_SIZE; i++) {
-		page_test[i] = i % 256; 
-	}
-	char* page_test1 = memory_page_allocator_allocate(&kernel_page_allocator);
-	disk_write(1, &page_test[0]);
-	disk_read(0, &page_test1[0]);
-	*/
-	
-	init_taskinfo(&taskinfoA, testA, memory_page_allocator_allocate(&kernel_page_allocator), PAGE_SIZE, "A", 0);
-	task_t* taskA = memory_cache_allocator_allocate(&kernel_cache_allocator, sizeof(task_t));
-	task_init_by_info(taskA, &taskinfoA);
-	scheduler_add_task(scheduler, taskA);
-	init_taskinfo(&taskinfoB, testB, memory_page_allocator_allocate(&kernel_page_allocator), PAGE_SIZE, "B", 5);
-	task_t* taskB = memory_cache_allocator_allocate(&kernel_cache_allocator, sizeof(task_t));
-	task_init_by_info(taskB, &taskinfoB);
-	scheduler_add_task(scheduler, taskB);
+
+	init_taskinfo(&superinfo, super, memory_page_allocator_allocate(&kernel_page_allocator), PAGE_SIZE, "super", 0, NULL);
+	task_t* super = get_task_by_info(&superinfo);
+	scheduler_add_task(scheduler, super);
 	return;
 }

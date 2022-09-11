@@ -20,3 +20,4 @@ int file_list(dir_entry_t* (*entrys)[MAX_INODE_QUANTITY]);
 void kill(signal_t* signal);
 
 int get_task_id();
+char* get_task_arg();
