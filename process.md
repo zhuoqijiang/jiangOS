@@ -1,1 +1,1 @@
-![process](https://github.com/zhuoqijiang/jiangOS/datum/process.png)
+![process](https://github.com/zhuoqijiang/jiangOS/blob/master/datum/process.png)
