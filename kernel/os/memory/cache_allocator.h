@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../base/type.h"
+#include "kernel/base/type.h"
 
 #define ALLOCATOR_LIST_SIZE 128
 #define ALLOCATOR_ALIGN 32

@@ -1,8 +1,8 @@
-#include "../../base/const.h"
-#include "../file/file_op.h"
-#include "../task/task.h"
-#include "../task/scheduler/scheduler.h"
-#include "../task/signal/signal.h"
+#include "kernel/base/const.h"
+#include "kernel/os/file/file_op.h"
+#include "kernel/os/task/task.h"
+#include "kernel/os/task/scheduler/scheduler.h"
+#include "kernel/os/task/signal/signal.h"
 extern scheduler_t* scheduler;
 static size_t s_write(int fd, const void* buf, size_t count);
 static size_t s_read(int fd, void* buf, size_t count);

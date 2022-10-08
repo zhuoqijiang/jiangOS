@@ -1,6 +1,6 @@
-#include "signal.h"
-#include "../scheduler/scheduler.h"
-#include "../../../base/stdio.h"
+#include "kernel/os/task/signal/signal.h"
+#include "kernel/os/task/scheduler/scheduler.h"
+#include "kernel/base/stdio.h"
 //static void signal_kill(void* arg);
 //static void signal_child(void* arg);
 static void signal_kill(void* arg)

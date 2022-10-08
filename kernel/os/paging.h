@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../base/type.h"
+#include "kernel/base/type.h"
 typedef struct {
 	u32_t pde_attribute;
 }pde_t;

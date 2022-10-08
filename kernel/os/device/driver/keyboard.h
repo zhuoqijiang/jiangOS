@@ -1,7 +1,7 @@
 #pragma once
-#include "../../../base/type.h"
-#include "../../../tools/container/queue.h"
-#include "../../task/task.h"
+#include "kernel/base/type.h"
+#include "kernel/tools/container/queue.h"
+#include "kernel/os/task/task.h"
 
 #define MAX_KEYS 128
 typedef struct {

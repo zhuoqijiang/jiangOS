@@ -1,9 +1,9 @@
 #pragma once
-#include "../../base/type.h"
-#include "../../base/const.h"
-#include "../protect.h"
-#include "../file/file_op.h"
-#include "../../tools/container/queue.h"
+#include "kernel/base/type.h"
+#include "kernel/base/const.h"
+#include "kernel/os/protect.h"
+#include "kernel/os/file/file_op.h"
+#include "kernel/tools/container/queue.h"
 typedef void* taskinfo_f;
 
 

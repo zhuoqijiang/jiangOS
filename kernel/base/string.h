@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type.h"
+#include "kernel/base/type.h"
 
 void memcpy(void* dst, const void* src, u32_t size);
 void memset(void* dst, int v, size_t size);

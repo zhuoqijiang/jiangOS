@@ -1,6 +1,6 @@
-#include "disk.h"
-#include "../../base/const.h"
-#include "../../base/io.h"
+#include "kernel/os/device/disk.h"
+#include "kernel/base/const.h"
+#include "kernel/base/io.h"
 
 static void disk_cmd_read_init(disk_cmd_t* cmd, u32_t sector_num)
 {

@@ -1,6 +1,7 @@
-#include "o1_scheduler.h"
-#include "../../memory/cache_allocator.h"
-#include "../signal/signal.h" 
+#include "kernel/os/task/scheduler/o1_scheduler.h"
+
+#include "kernel/os/memory/cache_allocator.h"
+#include "kernel/os/task/signal/signal.h" 
  
 extern memory_cache_allocator_t kernel_cache_allocator;
 

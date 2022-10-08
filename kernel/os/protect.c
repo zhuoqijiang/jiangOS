@@ -1,7 +1,7 @@
-#include "protect.h" 
-#include "../base/string.h"
-#include "../base/const.h"
-#include "../base/io.h"
+#include "kernel/os/protect.h" 
+#include "kernel/base/string.h"
+#include "kernel/base/const.h"
+#include "kernel/base/io.h"
 
 u8_t gdt_ptr[6];
 descriptor_t gdt[GDT_SIZE];

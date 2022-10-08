@@ -1,9 +1,9 @@
 
-#include "interrupt.h"
-#include "../base/const.h"
-#include "../base/io.h"
-#include "event.h" 
-#include "syscall/syscall.h"
+#include "kernel/os/interrupt.h"
+#include "kernel/base/const.h"
+#include "kernel/base/io.h"
+#include "kernel/os/event.h" 
+#include "kernel/os/syscall/syscall.h"
 u8_t idt_ptr[6];
 gate_t idt[IDT_SIZE];
 u16_t int_event_table = 0xffff;

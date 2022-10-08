@@ -1,7 +1,7 @@
-#include "file_sys.h" 
-#include "../../base/string.h"
-#include "../memory/page_allocator.h"
-#include "../device/disk.h" 
+#include "kernel/os/file/file_sys.h" 
+#include "kernel/base/string.h"
+#include "kernel/os/memory/page_allocator.h"
+#include "kernel/os/device/disk.h" 
 extern memory_page_allocator_t kernel_page_allocator;
 super_block_t super_block;
 void init_fs()

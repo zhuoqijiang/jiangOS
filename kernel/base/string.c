@@ -1,5 +1,5 @@
-#include "string.h"
-#include "type.h"
+#include "kernel/base/string.h"
+#include "kernel/base/type.h"
 void memcpy(void* dst, const void* src, u32_t size)
 {
 	u8_t* c_dst = (u8_t*)dst;

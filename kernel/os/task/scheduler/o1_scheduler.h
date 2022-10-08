@@ -1,6 +1,6 @@
 #pragma once
 
-#include "scheduler.h"
+#include "kernel/os/task/scheduler/scheduler.h"
 
 #define PRIORITY_MAX_LEVEL 5
 

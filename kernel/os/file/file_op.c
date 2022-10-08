@@ -1,10 +1,9 @@
-#include "file_op.h" 
-
-#include "../task/task.h"
-#include "file_cache.h"
-#include "../../base/string.h"
-#include "../../base/stdio.h"
-#include "../task/scheduler/scheduler.h"
+#include "kernel/os/file/file_op.h" 
+#include "kernel/os/file/file_cache.h"
+#include "kernel/os//task/task.h"
+#include "kernel/base/string.h"
+#include "kernel/base/stdio.h"
+#include "kernel/os/task/scheduler/scheduler.h"
 extern super_block_cache_t super_block_cache;
 extern inode_cache_t inode_cache;
 extern dir_entry_cache_t dir_entry_cache;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../task.h"
+#include "kernel/os/task/task.h"
 
 typedef enum {
 	SIGNAL_KILL,

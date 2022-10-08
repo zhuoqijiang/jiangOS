@@ -1,5 +1,5 @@
-#include "string.h"
-#include "io.h"
+#include "kernel/base/string.h"
+#include "kernel/base/io.h"
 void printf(const char* format, ...)
 {
 	const int out_str_max = 512;

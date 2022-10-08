@@ -1,7 +1,7 @@
-#include "keyboard.h"
-#include "../../../base/stdio.h"
-#include "../../memory/cache_allocator.h"
-#include "../../task/scheduler/scheduler.h"
+#include "kernel/base/stdio.h"
+#include "kernel/os/device/driver/keyboard.h"
+#include "kernel/os/memory/cache_allocator.h"
+#include "kernel/os/task/scheduler/scheduler.h"
 keyboard_event_t keyboard_event;
 
 char keymap0[0x80] = {

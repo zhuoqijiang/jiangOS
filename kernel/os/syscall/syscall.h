@@ -1,10 +1,10 @@
 #pragma once
 
 
-#include "../../base/type.h"
-#include "../../base/const.h"
-#include "../file/file_cache.h"
-#include "../task/signal/signal.h"
+#include "kernel/base/type.h"
+#include "kernel/base/const.h"
+#include "kernel/os/file/file_cache.h"
+#include "kernel/os/task/signal/signal.h"
 void sys_call();
 
 

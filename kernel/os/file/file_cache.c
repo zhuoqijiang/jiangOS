@@ -1,7 +1,8 @@
-#include "file_cache.h" 
-#include "../memory/page_allocator.h"
-#include "../device/disk.h"
-#include "../../base/stdio.h"
+#include "kernel/base/stdio.h"
+#include "kernel/os/file/file_cache.h" 
+#include "kernel/os/memory/page_allocator.h"
+#include "kernel/os/device/disk.h"
+
 extern super_block_t super_block;
 extern memory_page_allocator_t kernel_page_allocator;
 super_block_cache_t super_block_cache;

@@ -1,10 +1,10 @@
-#include "../os/syscall/syscall.h"
-#include "../os/file/file_op.h"
-#include "../os/file/file_cache.h" 
-#include "../os/file/file_sys.h"
-#include "../base/stdio.h"
-#include "../base/string.h"
-#include "../os/device/driver/keyboard.h"
+#include "kernel/os/syscall/syscall.h"
+#include "kernel/os/file/file_op.h"
+#include "kernel/os/file/file_cache.h" 
+#include "kernel/os/file/file_sys.h"
+#include "kernel/base/stdio.h"
+#include "kernel/base/string.h"
+#include "kernel/os/device/driver/keyboard.h"
 void ls()
 {
 	dir_entry_t* entrys[MAX_INODE_QUANTITY];

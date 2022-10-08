@@ -1,6 +1,6 @@
-#include "type.h"
-#include "io.h"
-#include "const.h"
+#include "kernel/base/type.h"
+#include "kernel/base/io.h"
+#include "kernel/base/const.h"
 #define screen_width 80
 #define screen_height 25
 

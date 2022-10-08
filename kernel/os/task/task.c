@@ -1,9 +1,9 @@
 
 #include "task.h"
-#include "../../base/string.h"
-#include "../../base/io.h"
-#include "../memory/cache_allocator.h"
-#include "../task/signal/signal.h" 
+#include "kernel/base/string.h"
+#include "kernel/base/io.h"
+#include "kernel/os/memory/cache_allocator.h"
+#include "kernel/os/task/signal/signal.h" 
 extern descriptor_t gdt[GDT_SIZE];
 extern tss_t tss;
 

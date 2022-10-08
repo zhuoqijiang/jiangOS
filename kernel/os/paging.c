@@ -1,7 +1,7 @@
-#include "paging.h"
-#include "../base/const.h"
+#include "kernel/os/paging.h"
+#include "kernel/base/const.h"
 //#include "stdlib.h" //for test
-#include "memory/page_allocator.h"
+#include "kernel/os/memory/page_allocator.h"
 extern memory_page_allocator_t kernel_page_allocator;
 pde_t* kernel_space = NULL;
 

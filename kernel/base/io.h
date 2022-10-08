@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type.h" 
+#include "kernel/base/type.h" 
 
 // for showing 
 void show(u16_t row, u16_t column, u8_t color, u8_t ch);

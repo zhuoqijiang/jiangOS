@@ -1,6 +1,6 @@
 
-#include "cache_allocator.h"
-#include "page_allocator.h" 
+#include "kernel/os/memory/cache_allocator.h"
+#include "kernel/os/memory/page_allocator.h" 
 memory_cache_allocator_t kernel_cache_allocator;
 extern memory_page_allocator_t kernel_page_allocator;
 

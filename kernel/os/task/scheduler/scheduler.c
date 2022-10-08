@@ -1,5 +1,5 @@
-#include "scheduler.h"
-#include "../../../base/stdio.h"
+#include "kernel/os/task/scheduler/scheduler.h"
+#include "kernel/base/stdio.h"
 scheduler_t* scheduler = NULL;
 
 void scheduler_add_task(scheduler_t* sche, task_t* task)

@@ -1,9 +1,9 @@
 #pragma once
 
 //#include "../task.h"
-#include "../../../tools/container/list.h"
-#include "../../../tools/container/queue.h" 
-#include "../task.h"
+#include "kernel/tools/container/list.h"
+#include "kernel/tools/container/queue.h" 
+#include "kernel/os/task/task.h"
 
 
 typedef struct scheduler_t{

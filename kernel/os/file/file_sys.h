@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../base/type.h" 
-#include "../../base/const.h" 
+#include "kernel/base/type.h" 
+#include "kernel/base/const.h" 
 
 typedef struct {
 	char name[MAX_FILE_SYS_NAME];

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type.h"
+#include "kernel/tools/container/type.h"
 
 void type_copy(void* src, void* dst, size_t type_size);
 
